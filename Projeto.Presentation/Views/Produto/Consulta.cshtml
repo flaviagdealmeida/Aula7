@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Consulta";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h2>Consulta de Produtos</h2>
+
+@{
+    try
+    {
+
+        if (TempData["Mensagem"].ToString() != "")
+        {
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Atenção!</strong> <p>  @TempData["Mensagem"] </p>
+            </div>
+        }
+    }
+    catch { }
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th class="bg-primary text-white">Código</th>
+            <th class="bg-primary text-white">Nome do Produto</th>
+            <th class="bg-primary text-white">Preço </th>
+            <th class="bg-primary text-white">Quantidade</th>
+            <th class="bg-primary text-white">Nome Estoque</th>
+            <th class="bg-primary text-white">Total</th>
+
+            <th class="bg-primary text-white">Operações</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.IdProduto</td>
+            <td>@item.Nome</td>
+            <td>@item.Preco</td>
+            <td>@item.Quantidade</td>
+            <td>@item.Estoque.Nome</td>
+            <td>@item.Total</td>
+
+            <td>
+                <a href="/Produto/Edicao/@item.IdProduto" class="btn btn-warning">Atualizar</a>
+                <a href="/Produto/Exclusao/@item.IdProduto" class="btn btn-danger" onclick="return confirm('Deseja excluir o produto: @item.IdProduto');">Excluir</a>
+
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6"> Quantitdade de Itens: @Model.Count</td>
+            <td>
+                <a class="btn btn-dark btn-sm btn-block" href="/Produto/Relatorio"> Gerar Relatório de Produtos</a>
+            </td>
+        </tr>
+    </tfoot>
+</table>
